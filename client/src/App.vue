@@ -1,4 +1,35 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+let socket: WebSocket | null = null
+const inputValue = ref<string>('') //新消息
+
+onMounted(() => {
+  connectWebSocket()
+})
+
+// WEBSOCKETL连接
+const connectWebSocket = () => {
+  // 客户端就会与服务器进行连接
+  socket = new WebSocket('ws://127.0.0.1:8080')
+
+  socket.onopen = () => {
+    alert('连接成功')
+  }
+
+  socket.onerror = () => {
+    alert('websocket连接发生错误')
+  }
+
+  socket.onclose = () => {
+    alert('websocket连接关闭')
+  }
+
+  socket.onmessage = (event) => {
+    console.log('websocket收到消息', event.data)
+  }
+}
+</script>
 
 <template>
   <div class="context">
