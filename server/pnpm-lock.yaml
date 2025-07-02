@@ -29,6 +29,9 @@ importers:
       nodemon:
         specifier: ^3.1.10
         version: 3.1.10
+      ws:
+        specifier: ^8.18.3
+        version: 8.18.3
 
 packages:
 
@@ -531,6 +534,18 @@ packages:
   wordwrap@0.0.3:
     resolution: {integrity: sha512-1tMA907+V4QmxV7dbRvb4/8MaRALK6q9Abid3ndMYnbyo8piisCmeONVqVSXqQA3KaP4SLt5b7ud6E2sqP8TFw==, tarball: https://registry.npmmirror.com/wordwrap/-/wordwrap-0.0.3.tgz}
     engines: {node: '>=0.4.0'}
+
+  ws@8.18.3:
+    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==, tarball: https://registry.npmmirror.com/ws/-/ws-8.18.3.tgz}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
 
   yargs@3.10.0:
     resolution: {integrity: sha512-QFzUah88GAGy9lyDKGBqZdkYApt63rCXYBGYnEP4xDJPXNqXXnBDACnbrXnViV6jRSqAePwrATi2i8mfYm4L1A==, tarball: https://registry.npmmirror.com/yargs/-/yargs-3.10.0.tgz}
@@ -1036,6 +1051,8 @@ snapshots:
   wordwrap@0.0.2: {}
 
   wordwrap@0.0.3: {}
+
+  ws@8.18.3: {}
 
   yargs@3.10.0:
     dependencies:
