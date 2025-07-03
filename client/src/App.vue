@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
+interface Message {
+  username: string
+  value: string
+}
+
 let socket: WebSocket | null = null
 const inputValue = ref<string>('') //新消息
 
+const messageList = ref<Message[]>([])
 // WEBSOCKETL连接
 const connectWebSocket = () => {
   // 客户端就会与服务器进行连接
@@ -18,7 +24,7 @@ const connectWebSocket = () => {
   }
 
   socket.onmessage = (event) => {
-    console.log('websocket收到消息', event.data)
+    messageList.value.push(JSON.parse(event.data))
   }
 
   socket.onerror = () => {
@@ -32,13 +38,13 @@ onMounted(() => {
 
 const handelSendMessageClick = () => {
   // 携带 名称,消息
-
   const names = ['张三', '李四', '王五', '赵六', '钱七', '孙八', '周九', '吴十']
   const message = {
     username: names[Math.floor(Math.random() * names.length)],
     value: inputValue.value,
   }
   socket?.send(JSON.stringify(message))
+  inputValue.value = ''
 }
 </script>
 
@@ -50,9 +56,9 @@ const handelSendMessageClick = () => {
         <span>多云聊天室</span>
       </header>
       <article class="article">
-        <div class="message"><strong>张三</strong>666</div>
-        <div class="message"><strong>李四</strong>666</div>
-        <div class="message"><strong>王五</strong>666</div>
+        <div class="message" v-for="(item, index) in messageList" :key="index">
+          <strong>{{ item.username }}：</strong>{{ item.value }}
+        </div>
       </article>
       <footer class="footer">
         <el-input
