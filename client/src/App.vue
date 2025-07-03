@@ -4,10 +4,6 @@ import { ref, onMounted } from 'vue'
 let socket: WebSocket | null = null
 const inputValue = ref<string>('') //新消息
 
-onMounted(() => {
-  connectWebSocket()
-})
-
 // WEBSOCKETL连接
 const connectWebSocket = () => {
   // 客户端就会与服务器进行连接
@@ -17,10 +13,6 @@ const connectWebSocket = () => {
     alert('连接成功')
   }
 
-  socket.onerror = () => {
-    alert('websocket连接发生错误')
-  }
-
   socket.onclose = () => {
     alert('websocket连接关闭')
   }
@@ -28,6 +20,25 @@ const connectWebSocket = () => {
   socket.onmessage = (event) => {
     console.log('websocket收到消息', event.data)
   }
+
+  socket.onerror = () => {
+    alert('websocket连接发生错误')
+  }
+}
+
+onMounted(() => {
+  connectWebSocket()
+})
+
+const handelSendMessageClick = () => {
+  // 携带 名称,消息
+
+  const names = ['张三', '李四', '王五', '赵六', '钱七', '孙八', '周九', '吴十']
+  const message = {
+    username: names[Math.floor(Math.random() * names.length)],
+    value: inputValue.value,
+  }
+  socket?.send(JSON.stringify(message))
 }
 </script>
 
@@ -44,8 +55,13 @@ const connectWebSocket = () => {
         <div class="message"><strong>王五</strong>666</div>
       </article>
       <footer class="footer">
-        <el-input class="input" placeholder="Please input" />
-        <el-button type="primary">发送</el-button>
+        <el-input
+          class="input"
+          placeholder="Please input"
+          v-model="inputValue" />
+        <el-button type="primary" @click="handelSendMessageClick"
+          >发送</el-button
+        >
       </footer>
     </div>
   </div>
